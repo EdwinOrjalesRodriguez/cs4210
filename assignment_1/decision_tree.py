@@ -16,6 +16,8 @@ import csv
 db = []
 X = []
 Y = []
+xMap = [[3, "Young", "Prepresbyopic", "Presbyopic"], [2, "Myope", "Hypermetrope"], [2, "Yes", "No"], [2, "Normal", "Reduced"]]
+yMap = [2, "Yes", "No"]
 
 #reading the data in a csv file
 with open('contact_lens.csv', 'r') as csvfile:
@@ -25,14 +27,14 @@ with open('contact_lens.csv', 'r') as csvfile:
          db.append (row)
          print(row)
 
-#transform the original categorical training features into numbers and add to the 4D array X. For instance Young = 1, Prepresbyopic = 2, Presbyopic = 3
-# so X = [[1, 1, 1, 1], [2, 2, 2, 2], ...]]
-#--> add your Python code here
-# X =
-
-#transform the original categorical training classes into numbers and add to the vector Y. For instance Yes = 1, No = 2, so Y = [1, 1, 2, 2, ...]
-#--> addd your Python code here
-# Y =
+X = [[0 for j in row[:-1]] for i, row in enumerate(db)]  # Initialize the array, skipping the last col
+Y = [0 for i in enumerate(db)]
+for i, row in enumerate(db):
+    # transform the original categorical training classes to numbers and add to the vector Y. For instance Yes = 1, No = 2, so Y = [1, 1, 2, 2, ...]
+    # --> add your Python code here
+    Y[i] = yMap.index(db[i][-1])
+    for j, item in enumerate(row[:-1]):
+        X[i][j] = xMap[j].index(item)
 
 #fitting the decision tree to the data
 clf = tree.DecisionTreeClassifier(criterion = 'entropy')
